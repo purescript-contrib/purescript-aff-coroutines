@@ -1,6 +1,5 @@
 {
   "name": "purescript-aff-coroutines",
-  "version": "1.0.0",
   "moduleType": [
     "node"
   ],
@@ -11,8 +10,8 @@
     "output"
   ],
   "dependencies": {
+    "purescript-aff": "^0.11.3",
     "purescript-console": "^0.1.0",
-    "purescript-coroutines": "~0.2.2",
-    "purescript-aff": "~0.11.3"
+    "purescript-coroutines": "^0.2.2"
   }
 }

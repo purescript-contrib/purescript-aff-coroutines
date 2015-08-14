@@ -9,6 +9,10 @@
     "bower_components",
     "output"
   ],
+  "repository": {                                                 
+    "type": "git",                                                
+    "url": "git://github.com/paf31/purescript-aff-coroutines.git"   
+  },                                                              
   "dependencies": {
     "purescript-aff": "^0.11.3",
     "purescript-coroutines": "~0.3.0"

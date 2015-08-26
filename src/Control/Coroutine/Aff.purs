@@ -15,7 +15,7 @@ import Data.Functor (($>))
 import Control.Coroutine
 import Control.Monad.Eff (Eff())
 import Control.Monad.Eff.Class (liftEff)
-import Control.Monad.Aff (Aff(), launchAff)
+import Control.Monad.Aff (Aff(), runAff)
 import Control.Monad.Aff.AVar (AVar(), AVAR(), makeVar, takeVar, putVar)
 import Control.Monad.Trans (lift)
     
@@ -37,5 +37,5 @@ import Control.Monad.Trans (lift)
 produce :: forall a r eff. ((Either a r -> Eff (avar :: AVAR | eff) Unit) -> Eff (avar :: AVAR | eff) Unit) -> Producer a (Aff (avar :: AVAR | eff)) r
 produce recv = do
   v <- lift makeVar
-  lift $ liftEff $ recv $ launchAff <<< putVar v
+  lift $ liftEff $ recv $ runAff (const (return unit)) return <<< putVar v
   producer (takeVar v)

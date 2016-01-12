@@ -14,7 +14,7 @@ produce :: forall a r eff. ((Either a r -> Eff (avar :: AVAR | eff) Unit) -> Eff
 
 Create a `Producer` using an asynchronous callback.
 
-The callback should provide zero or more values of type `a`, which will be 
+The callback should provide zero or more values of type `a`, which will be
 emitted by the `Producer`, terminated by an optional value of type `r`. No values
 should be provided after a value of type `r` has been provided.
 
@@ -27,5 +27,14 @@ produce \emit -> do
   log "Done!"
   emit (Right "finished")
 ```
+
+#### `produce'`
+
+``` purescript
+produce' :: forall a r m eff. (Monad m, MonadAff (avar :: AVAR | eff) m) => ((Either a r -> Eff (avar :: AVAR | eff) Unit) -> Eff (avar :: AVAR | eff) Unit) -> Producer a m r
+```
+
+A version of `produce` that creates a `Producer` with an underlying
+`MonadAff`, rather than `Aff` specifically.
 
 

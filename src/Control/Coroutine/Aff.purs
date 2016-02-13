@@ -6,14 +6,14 @@
 
 module Control.Coroutine.Aff where
 
-import Prelude
+import Prelude (class Monad, Unit, (<<<), return, unit, const, ($), bind)
 
 import Data.Either (Either())
 
 import Control.Coroutine (Producer(), producer)
 import Control.Monad.Aff (Aff(), runAff)
 import Control.Monad.Aff.AVar (AVAR(), makeVar, takeVar, putVar)
-import Control.Monad.Aff.Class (MonadAff, liftAff)
+import Control.Monad.Aff.Class (class MonadAff, liftAff)
 import Control.Monad.Eff (Eff())
 import Control.Monad.Eff.Class (liftEff)
 import Control.Monad.Free.Trans (hoistFreeT)

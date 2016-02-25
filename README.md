@@ -1,5 +1,8 @@
 # purescript-aff-coroutines
 
+[![Latest release](http://img.shields.io/bower/v/purescript-nullable.svg)](https://github.com/purescript-aff-coroutines/purescript-aff-coroutines/releases)
+[![Maintainer: paf31](https://img.shields.io/badge/maintainer-paf31-lightgrey.svg)](http://github.com/paf31)
+
 Helper functions for creating coroutines with the Aff monad
 
 - [Module Documentation](docs/Control/Coroutine/Aff.md)

@@ -47,7 +47,7 @@ produce recv = hoistFreeT liftAff do
 -- | `MonadAff`, rather than `Aff` specifically.
 produce'
   :: forall a r m eff
-   . (Monad m, MonadAff (avar :: AVAR | eff) m)
+   . (MonadAff (avar :: AVAR | eff) m)
   => ((Either a r -> Eff (avar :: AVAR | eff) Unit) -> Eff (avar :: AVAR | eff) Unit)
   -> Producer a m r
 produce' = hoistFreeT liftAff <<< produce

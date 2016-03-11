@@ -1,3 +1,6 @@
-.*
-output
-bower_components
+/.*
+!/.gitignore
+!/.travis.yml
+/bower_components/
+/node_modules/
+/output/

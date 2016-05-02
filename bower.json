@@ -1,5 +1,6 @@
 {
   "name": "purescript-aff-coroutines",
+  "license": "MIT",
   "moduleType": [
     "node"
   ],

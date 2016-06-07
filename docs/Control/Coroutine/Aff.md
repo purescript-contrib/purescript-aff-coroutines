@@ -28,6 +28,23 @@ produce \emit -> do
   emit (Right "finished")
 ```
 
+#### `produceAff`
+
+``` purescript
+produceAff :: forall a r eff. ((Either a r -> Aff (avar :: AVAR | eff) Unit) -> Aff (avar :: AVAR | eff) Unit) -> Producer a (Aff (avar :: AVAR | eff)) r
+```
+
+A variant of `produce` where the setup and callback functions use the `Aff`
+monad. This can be helpful in certain cases.
+
+For example:
+
+```purescript
+produceAff \emit -> do
+  later' 1000 $ emit $ Left "progress"
+  later' 1000 $ emit $ Right "finished"
+```
+
 #### `produce'`
 
 ``` purescript

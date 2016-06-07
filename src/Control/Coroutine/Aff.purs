@@ -11,7 +11,7 @@ import Prelude
 import Data.Either (Either())
 
 import Control.Coroutine (Producer(), producer)
-import Control.Monad.Aff (Aff(), runAff)
+import Control.Monad.Aff (Aff(), runAff, forkAff)
 import Control.Monad.Aff.AVar (AVAR(), makeVar, takeVar, putVar)
 import Control.Monad.Aff.Class (class MonadAff, liftAff)
 import Control.Monad.Eff (Eff())
@@ -38,9 +38,25 @@ produce
   :: forall a r eff
    . ((Either a r -> Eff (avar :: AVAR | eff) Unit) -> Eff (avar :: AVAR | eff) Unit)
   -> Producer a (Aff (avar :: AVAR | eff)) r
-produce recv = do
+produce recv = produceAff \send -> liftEff (recv (runAff (const (pure unit)) pure <<< send))
+
+-- | A variant of `produce` where the setup and callback functions use the `Aff`
+-- | monad. This can be helpful in certain cases.
+-- |
+-- | For example:
+-- |
+-- | ```purescript
+-- | produceAff \emit -> do
+-- |   later' 1000 $ emit $ Left "progress"
+-- |   later' 1000 $ emit $ Right "finished"
+-- | ```
+produceAff
+  :: forall a r eff
+   . ((Either a r -> Aff (avar :: AVAR | eff) Unit) -> Aff (avar :: AVAR | eff) Unit)
+  -> Producer a (Aff (avar :: AVAR | eff)) r
+produceAff recv = do
   v <- lift makeVar
-  lift $ liftEff $ recv $ runAff (const (pure unit)) pure <<< putVar v
+  lift (forkAff (recv (putVar v)))
   producer (takeVar v)
 
 -- | A version of `produce` that creates a `Producer` with an underlying

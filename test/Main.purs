@@ -3,7 +3,7 @@ module Test.Main where
 import Prelude
 
 import Control.Coroutine (Consumer, Producer, runProcess, consumer, ($$))
-import Control.Coroutine.Aff (produce)
+import Control.Coroutine.Aff (produceAff)
 import Control.Monad.Aff (Aff, runAff, later')
 import Control.Monad.Aff.AVar (AVAR)
 import Control.Monad.Eff (Eff)
@@ -15,11 +15,11 @@ import Data.Functor (($>))
 import Data.Maybe (Maybe(..))
 
 p :: forall eff. Producer String (Aff (avar :: AVAR | eff)) String
-p = produce \emit -> runAff (const (pure unit)) pure do
-  later' 1000 $ liftEff $ emit $ Left "Working..."
-  later' 1000 $ liftEff $ emit $ Left "Working..."
-  later' 1000 $ liftEff $ emit $ Left "Working..."
-  later' 1000 $ liftEff $ emit $ Right "Done!"
+p = produceAff \emit -> do
+  later' 1000 $ emit $ Left "Working..."
+  later' 1000 $ emit $ Left "Working..."
+  later' 1000 $ emit $ Left "Working..."
+  later' 1000 $ emit $ Right "Done!"
 
 c :: forall eff. Consumer String (Aff (console :: CONSOLE | eff)) String
 c = consumer \s -> liftEff (log s) $> Nothing

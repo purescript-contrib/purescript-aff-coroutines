@@ -13,7 +13,7 @@ import Data.Either (Either())
 import Control.Coroutine (Producer(), producer)
 import Control.Monad.Aff (Aff(), runAff)
 import Control.Monad.Aff.AVar (AVAR(), makeVar, takeVar, putVar)
-import Control.Monad.Aff.Class (MonadAff, liftAff)
+import Control.Monad.Aff.Class (class MonadAff, liftAff)
 import Control.Monad.Eff (Eff())
 import Control.Monad.Eff.Class (liftEff)
 import Control.Monad.Free.Trans (hoistFreeT)
@@ -38,9 +38,9 @@ produce
   :: forall a r eff
    . ((Either a r -> Eff (avar :: AVAR | eff) Unit) -> Eff (avar :: AVAR | eff) Unit)
   -> Producer a (Aff (avar :: AVAR | eff)) r
-produce recv = hoistFreeT liftAff do
+produce recv = do
   v <- lift makeVar
-  lift $ liftEff $ recv $ runAff (const (return unit)) return <<< putVar v
+  lift $ liftEff $ recv $ runAff (const (pure unit)) pure <<< putVar v
   producer (takeVar v)
 
 -- | A version of `produce` that creates a `Producer` with an underlying

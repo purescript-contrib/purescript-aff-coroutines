@@ -38,7 +38,8 @@ produce
   :: forall a r eff
    . ((Either a r -> Eff (avar :: AVAR | eff) Unit) -> Eff (avar :: AVAR | eff) Unit)
   -> Producer a (Aff (avar :: AVAR | eff)) r
-produce recv = produceAff \send -> liftEff (recv (runAff (const (pure unit)) pure <<< send))
+produce recv = produceAff \send ->
+  liftEff (recv (void <<< runAff (const (pure unit)) pure <<< send))
 
 -- | A variant of `produce` where the setup and callback functions use the `Aff`
 -- | monad. This can be helpful in certain cases.

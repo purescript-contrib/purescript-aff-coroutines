@@ -29,4 +29,4 @@ main :: forall eff. Eff ( console :: CONSOLE
                         , err :: EXCEPTION
                         | eff
                         ) Unit
-main = runAff logShow log $ runProcess (p $$ c)
+main = void $ runAff logShow log $ runProcess (p $$ c)

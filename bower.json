@@ -1,21 +1,20 @@
 {
   "name": "purescript-aff-coroutines",
   "license": "MIT",
-  "moduleType": [
-    "node"
-  ],
   "ignore": [
     "**/.*",
-    "node_modules",
     "bower_components",
-    "output"
+    "node_modules",
+    "output",
+    "bower.json",
+    "package.json"
   ],
   "repository": {
     "type": "git",
     "url": "git://github.com/purescript-contrib/purescript-aff-coroutines.git"
   },
   "dependencies": {
-    "purescript-aff": "^0.17.0",
+    "purescript-aff": "^1.0.0",
     "purescript-coroutines": "^1.0.0"
   }
 }

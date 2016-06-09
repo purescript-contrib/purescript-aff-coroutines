@@ -6,7 +6,7 @@
 
 module Control.Coroutine.Aff where
 
-import Prelude
+import Prelude (class Monad, Unit, (<<<), return, unit, const, ($), bind)
 
 import Data.Either (Either())
 

@@ -8,16 +8,16 @@ module Control.Coroutine.Aff where
 
 import Prelude
 
-import Data.Either (Either())
-
-import Control.Coroutine (Producer(), producer)
-import Control.Monad.Aff (Aff(), runAff, forkAff)
-import Control.Monad.Aff.AVar (AVAR(), makeVar, takeVar, putVar)
+import Control.Coroutine (Producer, producer)
+import Control.Monad.Aff (Aff, runAff, forkAff)
+import Control.Monad.Aff.AVar (AVAR, makeVar, takeVar, putVar)
 import Control.Monad.Aff.Class (class MonadAff, liftAff)
-import Control.Monad.Eff (Eff())
+import Control.Monad.Eff (Eff)
 import Control.Monad.Eff.Class (liftEff)
 import Control.Monad.Free.Trans (hoistFreeT)
-import Control.Monad.Trans (lift)
+import Control.Monad.Trans.Class (lift)
+
+import Data.Either (Either)
 
 -- | Create a `Producer` using an asynchronous callback.
 -- |
@@ -41,6 +41,15 @@ produce
 produce recv = produceAff \send ->
   liftEff (recv (void <<< runAff (const (pure unit)) pure <<< send))
 
+-- | A version of `produce` that creates a `Producer` with an underlying
+-- | `MonadAff`, rather than `Aff` specifically.
+produce'
+  :: forall a r m eff
+   . MonadAff (avar :: AVAR | eff) m
+  => ((Either a r -> Eff (avar :: AVAR | eff) Unit) -> Eff (avar :: AVAR | eff) Unit)
+  -> Producer a m r
+produce' = hoistFreeT liftAff <<< produce
+
 -- | A variant of `produce` where the setup and callback functions use the `Aff`
 -- | monad. This can be helpful in certain cases.
 -- |
@@ -59,12 +68,3 @@ produceAff recv = do
   v <- lift makeVar
   lift (forkAff (recv (putVar v)))
   producer (takeVar v)
-
--- | A version of `produce` that creates a `Producer` with an underlying
--- | `MonadAff`, rather than `Aff` specifically.
-produce'
-  :: forall a r m eff
-   . (MonadAff (avar :: AVAR | eff) m)
-  => ((Either a r -> Eff (avar :: AVAR | eff) Unit) -> Eff (avar :: AVAR | eff) Unit)
-  -> Producer a m r
-produce' = hoistFreeT liftAff <<< produce

@@ -1,6 +1,5 @@
-/.*
-!/.gitignore
-!/.travis.yml
-/bower_components/
-/node_modules/
-/output/
+.psci*
+bower_components/
+output/
+.psc-package
+.psc-ide-port

@@ -66,5 +66,5 @@ produceAff
   -> Producer a (Aff (avar :: AVAR | eff)) r
 produceAff recv = do
   v <- lift makeVar
-  lift (forkAff (recv (putVar v)))
+  _ <- lift (forkAff (recv (putVar v)))
   producer (takeVar v)

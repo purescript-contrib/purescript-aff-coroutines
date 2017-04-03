@@ -14,7 +14,7 @@
     "url": "git://github.com/purescript-contrib/purescript-aff-coroutines.git"
   },
   "dependencies": {
-    "purescript-aff": "^2.0.0",
-    "purescript-coroutines": "^3.0.0"
+    "purescript-aff": "^3.0.0",
+    "purescript-coroutines": "^4.0.0"
   }
 }

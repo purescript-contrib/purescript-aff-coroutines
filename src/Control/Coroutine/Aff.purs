@@ -16,8 +16,25 @@ import Control.Monad.Eff (Eff)
 import Control.Monad.Eff.Class (liftEff)
 import Control.Monad.Free.Trans (hoistFreeT)
 import Control.Monad.Trans.Class (lift)
+import Data.Either (Either(..))
 
-import Data.Either (Either)
+data Emission a b
+  = Step a
+  | Result b
+
+toEither :: forall a b. Emission a b -> Either a b
+toEither = case _ of
+  Step a -> Left a
+  Result b -> Right b
+
+newtype Emitter m a r eff = Emitter (Emission a r -> m (avar :: AVAR | eff) Unit)
+
+emit
+  :: forall m a r eff
+   . Emitter m a r eff
+  -> Emission a r
+  -> m (avar :: AVAR | eff) Unit
+emit (Emitter f) = f
 
 -- | Create a `Producer` using an asynchronous callback.
 -- |
@@ -28,25 +45,25 @@ import Data.Either (Either)
 -- | For example:
 -- |
 -- | ```purescript
--- | produce \emit -> do
+-- | produce \emitter -> do
 -- |   log "Working..."
--- |   emit (Left "progress")
+-- |   emit emitter (Left "progress")
 -- |   log "Done!"
--- |   emit (Right "finished")
+-- |   emit emitter (Right "finished")
 -- | ```
 produce
   :: forall a r eff
-   . ((Either a r -> Eff (avar :: AVAR | eff) Unit) -> Eff (avar :: AVAR | eff) Unit)
+   . (Emitter Eff a r eff -> Eff (avar :: AVAR | eff) Unit)
   -> Producer a (Aff (avar :: AVAR | eff)) r
-produce recv = produceAff \send ->
-  liftEff (recv (void <<< runAff (const (pure unit)) <<< send))
+produce recv = produceAff \(Emitter send) ->
+  liftEff (recv (Emitter (void <<< runAff (const (pure unit)) <<< send)))
 
 -- | A version of `produce` that creates a `Producer` with an underlying
 -- | `MonadAff`, rather than `Aff` specifically.
 produce'
   :: forall a r m eff
    . MonadAff (avar :: AVAR | eff) m
-  => ((Either a r -> Eff (avar :: AVAR | eff) Unit) -> Eff (avar :: AVAR | eff) Unit)
+  => (Emitter Eff a r eff -> Eff (avar :: AVAR | eff) Unit)
   -> Producer a m r
 produce' = hoistFreeT liftAff <<< produce
 
@@ -64,9 +81,9 @@ produce' = hoistFreeT liftAff <<< produce
 -- | ```
 produceAff
   :: forall a r eff
-   . ((Either a r -> Aff (avar :: AVAR | eff) Unit) -> Aff (avar :: AVAR | eff) Unit)
+   . (Emitter Aff a r eff -> Aff (avar :: AVAR | eff) Unit)
   -> Producer a (Aff (avar :: AVAR | eff)) r
 produceAff recv = do
   v <- lift makeEmptyVar
-  _ <- lift (forkAff (recv (flip putVar v)))
-  producer (takeVar v)
+  _ <- lift (forkAff (recv (Emitter (flip putVar v))))
+  producer (toEither <$> takeVar v)

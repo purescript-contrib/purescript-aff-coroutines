@@ -17,24 +17,29 @@ import Control.Monad.Eff.Class (liftEff)
 import Control.Monad.Free.Trans (hoistFreeT)
 import Control.Monad.Trans.Class (lift)
 import Data.Either (Either(..))
+import Data.Newtype (class Newtype)
 
-data Emission a b
-  = Step a
-  | Result b
+newtype Emitter m a r eff = Emitter (Step a r -> m (avar :: AVAR | eff) Unit)
 
-toEither :: forall a b. Emission a b -> Either a b
-toEither = case _ of
-  Step a -> Left a
-  Result b -> Right b
+derive instance newtypeEmitter :: Newtype (Emitter m a r eff) _
 
-newtype Emitter m a r eff = Emitter (Emission a r -> m (avar :: AVAR | eff) Unit)
+data Step a b
+  = Emit a
+  | Finish b
 
 emit
   :: forall m a r eff
    . Emitter m a r eff
-  -> Emission a r
+  -> a
   -> m (avar :: AVAR | eff) Unit
-emit (Emitter f) = f
+emit (Emitter f) = f <<< Emit
+
+close
+  :: forall m a r eff
+   . Emitter m a r eff
+  -> r
+  -> m (avar :: AVAR | eff) Unit
+close (Emitter f) = f <<< Finish
 
 -- | Create a `Producer` using an asynchronous callback.
 -- |
@@ -47,9 +52,9 @@ emit (Emitter f) = f
 -- | ```purescript
 -- | produce \emitter -> do
 -- |   log "Working..."
--- |   emit emitter (Left "progress")
+-- |   emit emitter "progress"
 -- |   log "Done!"
--- |   emit emitter (Right "finished")
+-- |   close emitter "finished"
 -- | ```
 produce
   :: forall a r eff
@@ -73,11 +78,11 @@ produce' = hoistFreeT liftAff <<< produce
 -- | For example:
 -- |
 -- | ```purescript
--- | produceAff \emit -> do
+-- | produceAff \emitter -> do
 -- |   delay $ Milliseconds 1000
--- |   emit  $ Left "progress"
+-- |   emit emitter "progress"
 -- |   delay $ Milliseconds 1000
--- |   emit  $ Right "finished"
+-- |   close emitter "finished"
 -- | ```
 produceAff
   :: forall a r eff
@@ -86,4 +91,6 @@ produceAff
 produceAff recv = do
   v <- lift makeEmptyVar
   _ <- lift (forkAff (recv (Emitter (flip putVar v))))
-  producer (toEither <$> takeVar v)
+  producer $ takeVar v <#> case _ of
+    Emit a -> Left a
+    Finish b -> Right b

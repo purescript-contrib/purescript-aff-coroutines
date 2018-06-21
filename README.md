@@ -18,3 +18,7 @@ bower install purescript-aff-coroutines
 ## Module documentation
 
 Module documentation is [published on Pursuit](http://pursuit.purescript.org/packages/purescript-aff-coroutines).
+
+## Contributing
+
+Check out the [contribution guidelines](https://github.com/purescript-contrib/purescript-aff-coroutines/blob/master/.github/contributing.md) to get started and see helpful related resources.

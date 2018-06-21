@@ -10,6 +10,7 @@
 ## Environment
 
 * PureScript **[version]**
+* Pulp **[version]**
 * `purescript-aff-coroutines` **[version]**
 
 ## Current behavior

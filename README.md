@@ -2,8 +2,9 @@
 
 [![Latest release](http://img.shields.io/bower/v/purescript-aff-coroutines.svg)](https://github.com/purescript-contrib/purescript-aff-coroutines/releases)
 [![Build status](https://travis-ci.org/purescript-contrib/purescript-aff-coroutines.svg?branch=master)](https://travis-ci.org/purescript-contrib/purescript-aff-coroutines)
-[![Dependency status](https://img.shields.io/librariesio/github/purescript-contrib/purescript-aff-coroutines.svg)](https://libraries.io/github/purescript-contrib/purescript-aff-coroutines)
+[![Pursuit](http://pursuit.purescript.org/packages/purescript-aff-coroutines/badge)](http://pursuit.purescript.org/packages/purescript-aff-coroutines/)
 [![Maintainer: garyb](https://img.shields.io/badge/maintainer-garyb-lightgrey.svg)](http://github.com/garyb)
+[![Maintainer: thomashoneyman](https://img.shields.io/badge/maintainer-thomashoneyman-lightgrey.svg)](http://github.com/thomashoneyman)
 
 Helper functions for creating coroutines with the Aff monad.
 

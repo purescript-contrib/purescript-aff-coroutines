@@ -1,6 +1,6 @@
 # Contribution
 
-Thank you for contributing to XLIBX!
+Thank you for contributing to `purescript-aff-coroutines`!
 
 Following these guidelines helps ensure we're able to carefully consider your contribution and help you finalize your pull request. Your time (like ours) is valuable, and we try to at least provide constructive feedback on every contribution.
 
@@ -21,7 +21,7 @@ Some contributions will take some discussion before we accept an update to the p
 
 # Ground Rules
 
-We have a small set of quality-of-life guidelines for contributing to XLIBX. These include:
+We have a small set of quality-of-life guidelines for contributing to `purescript-aff-coroutines`. These include:
 
 * All pull requests must pass continuous integration.
 * If you are adding new functionality, you should provide tests and documentation for your code. If you're fixing an existing bug, please provide a failing test case your patch solves.
@@ -30,14 +30,14 @@ We have a small set of quality-of-life guidelines for contributing to XLIBX. The
 ### Filing issues
 If you have a general question about the project, it's best to ask on the [PureScript user forum](https://purescript-users.ml) or the [functional programming Slack](https://functionalprogramming.slack.com/) than to open a new issue. If you have run into a bug in the project, then please do open an issue! When you do, we ask that you follow a few steps which are outlined in our issues template. The gist of it is here:
 
-* Verify the problem is indeed with XLIBX (not with Pulp, Bower, or PureScript);
+* Verify the problem is indeed with `purescript-aff-coroutines` (not with Pulp, Bower, or PureScript);
 * Record what versions you are using for PureScript and
 * Describe the issue with steps to reproduce (as much as you are able). A minimal reproducible example is the absolute best case scenario.
 
 We promise to address the issue as soon as we can.
 
 ### Suggesting features or enhancements
-We love to hear about ways we could make  better. If you're wishing for a feature that doesn't exist in XLIBX, you're probably not alone; there are bound to be others with similar needs. Please feel free to open an issue on GitHub that describes:
+We love to hear about ways we could make  better. If you're wishing for a feature that doesn't exist in `purescript-aff-coroutines`, you're probably not alone; there are bound to be others with similar needs. Please feel free to open an issue on GitHub that describes:
 
 * the feature you would like to see
 * why you need it

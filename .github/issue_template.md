@@ -10,7 +10,7 @@
 ## Environment
 
 * PureScript **[version]**
-* XLIBX **[version]**
+* `purescript-aff-coroutines` **[version]**
 
 ## Current behavior
 

@@ -34,12 +34,23 @@ import Data.Either (Either)
 -- |   log "Done!"
 -- |   emit (Right "finished")
 -- | ```
-produce
-  :: forall a r eff
+produce :: forall a r eff
    . ((Either a r -> Eff (avar :: AVAR | eff) Unit) -> Eff (avar :: AVAR | eff) Unit)
   -> Producer a (Aff (avar :: AVAR | eff)) r
 produce recv = produceAff \send ->
-  liftEff (recv (void <<< runAff (const (pure unit)) <<< send))
+  liftEff $ recv \ear -> void $ runAff (const (pure unit)) (send ear)
+-- Original code with error:
+-- produce recv = produceAff \send ->
+--   liftEff (recv (void <<< runAff (const (pure unit)) <<< send))
+
+-- Correct, but verbose version:
+-- produce (recv :: (Either a r -> Eff (avar :: AVAR | eff) Unit) -> Eff (avar :: AVAR | eff) Unit) = produceAff f
+--   where
+--     f :: (Either a r -> Aff (avar :: AVAR | eff) Unit) -> Aff (avar :: AVAR | eff) Unit
+--     f send = liftEff $ recv send'
+--       where
+--         send' :: (Either a r -> Eff (avar :: AVAR | eff) Unit)
+--         send' ear = void $ runAff (const (pure unit)) (send ear)
 
 -- | A version of `produce` that creates a `Producer` with an underlying
 -- | `MonadAff`, rather than `Aff` specifically.

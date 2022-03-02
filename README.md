@@ -4,7 +4,6 @@
 [![Release](https://img.shields.io/github/release/purescript-contrib/purescript-aff-coroutines.svg)](https://github.com/purescript-contrib/purescript-aff-coroutines/releases)
 [![Pursuit](https://pursuit.purescript.org/packages/purescript-aff-coroutines/badge)](https://pursuit.purescript.org/packages/purescript-aff-coroutines)
 [![Maintainer: garyb](https://img.shields.io/badge/maintainer-garyb-teal.svg)](https://github.com/garyb)
-[![Maintainer: thomashoneyman](https://img.shields.io/badge/maintainer-thomashoneyman-teal.svg)](https://github.com/thomashoneyman)
 
 Helper functions for creating [coroutines](https://github.com/purescript-contrib/purescript-coroutines) with the Aff monad.
 

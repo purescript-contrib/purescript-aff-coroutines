@@ -10,7 +10,6 @@
   , "maybe"
   , "newtype"
   , "prelude"
-  , "psci-support"
   , "transformers"
   ]
 , packages = ./packages.dhall

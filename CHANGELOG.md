@@ -5,6 +5,16 @@ Notable changes to this project are documented in this file. The format is based
 ## [Unreleased]
 
 Breaking changes:
+
+New features:
+
+Bugfixes:
+
+Other improvements:
+
+## [v9.0.0](https://github.com/purescript-contrib/purescript-aff-coroutines/releases/tag/v9.0.0) - 2022-04-28
+
+Breaking changes:
 - Update project and deps to PureScript v0.15.0 (#32 by @JordanMartinez)
 
 New features:

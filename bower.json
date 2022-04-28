@@ -14,12 +14,12 @@
     "url": "https://github.com/purescript-contrib/purescript-aff-coroutines.git"
   },
   "dependencies": {
-    "purescript-aff": "main",
-    "purescript-avar": "main",
-    "purescript-coroutines": "main",
-    "purescript-effect": "master"
+    "purescript-aff": "^7.0.0",
+    "purescript-avar": "^5.0.0",
+    "purescript-coroutines": "^7.0.0",
+    "purescript-effect": "^4.0.0"
   },
   "devDependencies": {
-    "purescript-console": "master"
+    "purescript-console": "^6.0.0"
   }
 }

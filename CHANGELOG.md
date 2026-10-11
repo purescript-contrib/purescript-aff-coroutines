@@ -11,6 +11,7 @@ New features:
 Bugfixes:
 
 Other improvements:
+- Migrate to registry-backed Spago and update CI tooling, preserving published dependency ranges.
 
 ## [v9.0.0](https://github.com/purescript-contrib/purescript-aff-coroutines/releases/tag/v9.0.0) - 2022-04-28
 

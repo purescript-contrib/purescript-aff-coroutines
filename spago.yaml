@@ -1,0 +1,27 @@
+package:
+  name: aff-coroutines
+  dependencies:
+    - aff: ">=7.0.0 <9.0.0"
+    - avar: ">=5.0.0 <6.0.0"
+    - coroutines: ">=7.0.0 <8.0.0"
+    - effect: ">=4.0.0 <5.0.0"
+    - either: ">=6.0.0 <7.0.0"
+    - freet: ">=7.0.0 <8.0.0"
+    - newtype: ">=5.0.0 <6.0.0"
+    - prelude: ">=6.0.0 <7.0.0"
+    - transformers: ">=6.0.0 <7.0.0"
+  test:
+    main: Test.Main
+    dependencies:
+      - console
+      - maybe
+  publish:
+    version: 9.0.1
+    license: MIT
+    location:
+      githubOwner: purescript-contrib
+      githubRepo: purescript-aff-coroutines
+
+workspace:
+  packageSet:
+    registry: 81.4.0
